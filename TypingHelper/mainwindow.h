@@ -17,4 +17,6 @@ public slots:
 	void main_menu_quit_button_clicked();
 private:
 	Ui::TypingHelperClass* ui;
+protected:
+	void keyPressEvent(QKeyEvent* event);
 };

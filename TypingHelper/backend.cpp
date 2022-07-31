@@ -1,15 +1,15 @@
-#include "uibackend.h"
+#include "backend.h"
 #include "logger.h"
 
 #include <qmessagebox.h>
 #include <qmainwindow.h>
 #include <stdlib.h>
+#include <qframe.h>
 
 void die_gracefully() {
 	LOG(LOG_INFO, "App is exiting with code 0");
 	exit(0);
 }
-
 void die(int status, bool print_err, bool show_dialog, cstr err) {
 
 	if(print_err) {

@@ -1,10 +1,13 @@
-#include "typinghelper.h"
+﻿#include "mainwindow.h"
 #include "logger.h"
-#include "uibackend.h"
+#include "backend.h"
+#include <fmt/core.h>
 
 #include <QtWidgets/QApplication>
 #include <Windows.h>
-
+#include <locale.h>
+#include <fcntl.h>
+#include <io.h>
 void createConsole() {
 	AllocConsole();
 	FILE* pFileCon = NULL;

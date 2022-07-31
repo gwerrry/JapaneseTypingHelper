@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <wchar.h>
 
 cstr FATAL_TAG = "FATAL";
 cstr DEBUG_TAG = "DEBUG";
@@ -94,9 +95,9 @@ void log_format(cstr tag, cstr message, va_list args) {
 	time(&now);
 	char* date = ctime(&now);
 	date[strlen(date) - 1] = '\0'; /* Removes the line break */
-
 	printf("%s [%s] ", date, tag); /* Print date and tag */
 
+	//vprintf(fmt::format(message, args).c_str(), args);
 	vprintf(message, args); /* Print message */
 
 	printf("\n");
@@ -110,5 +111,6 @@ void LOG(enum LogLevel level, cstr message, ...) {
 	log_format(get_log_level_str(level), message, args); /* Print log message */
 	va_end(args);
 
+	//..log_format(get_log_level_str(level), message, fmt::make_format_args(message));
 	log_text_reset();
 }

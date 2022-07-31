@@ -90,18 +90,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="converter.cpp" />
     <ClCompile Include="logger.c" />
-    <ClCompile Include="uibackend.cpp" />
+    <ClCompile Include="backend.cpp" />
     <QtRcc Include="typinghelper.qrc" />
     <QtUic Include="typinghelper.ui" />
-    <QtMoc Include="typinghelper.h" />
-    <ClCompile Include="typinghelper.cpp" />
+    <QtMoc Include="mainwindow.h" />
+    <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="global.h" />
     <ClInclude Include="logger.h" />
-    <ClInclude Include="uibackend.h" />
+    <ClInclude Include="backend.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
