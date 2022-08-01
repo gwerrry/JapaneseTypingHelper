@@ -9,6 +9,6 @@ typedef struct keyboardrows {
 } KeyboardRows;
 
 void die_gracefully();
-void die(int status, bool print_err, bool show_dialog, cstr message);
+void die(int status, bool print_err, bool show_dialog, ccptr message);
 QString parseQtRawKey(int b);
 bool isValidKey(int key, KeyboardRows rows);

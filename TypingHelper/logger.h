@@ -14,7 +14,7 @@ extern "C" {
 		LOG_ERROR
 	};
 
-	void LOG(enum LogLevel level, cstr message, ...);
+	void LOG(enum LogLevel level, ccptr message, ...);
 
 	#ifdef __cplusplus
 }

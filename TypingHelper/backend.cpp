@@ -10,7 +10,7 @@ void die_gracefully() {
 	LOG(LOG_INFO, "App is exiting with code 0");
 	exit(0);
 }
-void die(int status, bool print_err, bool show_dialog, cstr err) {
+void die(int status, bool print_err, bool show_dialog, ccptr err) {
 	if(print_err) {
 		LOG(LOG_FATAL, err);
 	}

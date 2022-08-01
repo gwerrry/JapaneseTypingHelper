@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include <wchar.h>
 
-cstr FATAL_TAG = "FATAL";
-cstr DEBUG_TAG = "DEBUG";
-cstr WARNING_TAG = "WARN";
-cstr INFO_TAG = "INFO";
-cstr ERROR_TAG = "ERROR";
+ccptr FATAL_TAG = "FATAL";
+ccptr DEBUG_TAG = "DEBUG";
+ccptr WARNING_TAG = "WARN";
+ccptr INFO_TAG = "INFO";
+ccptr ERROR_TAG = "ERROR";
 
 #ifdef WIN32
 #include <Windows.h>
@@ -73,7 +73,7 @@ void log_text_reset() {
 	LOG_INFO_COLOR /* GRAY */
 }
 
-cstr get_log_level_str(enum LogLevel level) {
+ccptr get_log_level_str(enum LogLevel level) {
 	switch(level) {
 		case LOG_FATAL:
 			return FATAL_TAG;
@@ -90,7 +90,7 @@ cstr get_log_level_str(enum LogLevel level) {
 	}
 }
 
-void log_format(cstr tag, cstr message, va_list args) {
+void log_format(ccptr tag, ccptr message, va_list args) {
 	time_t now;
 	time(&now);
 	char* date = ctime(&now);
@@ -103,7 +103,7 @@ void log_format(cstr tag, cstr message, va_list args) {
 	printf("\n");
 }
 
-void LOG(enum LogLevel level, cstr message, ...) {
+void LOG(enum LogLevel level, ccptr message, ...) {
 	log_text_color(level);
 
 	va_list args;
