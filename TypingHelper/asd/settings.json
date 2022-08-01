@@ -1,5 +1,3 @@
 {
-    "testbool": false,
-    "testint": 1222,
-    "teststr": "asdf"
+    "katakana_mode": false
 }

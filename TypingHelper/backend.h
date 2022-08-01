@@ -11,4 +11,5 @@ typedef struct keyboardrows {
 void die_gracefully();
 void die(int status, bool print_err, bool show_dialog, ccptr message);
 QString parseQtRawKey(int b);
+void switchCharacterSet(bool katakana);
 bool isValidKey(int key, KeyboardRows rows);

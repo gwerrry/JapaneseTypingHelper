@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
 	path += "\\asd\\settings.json";
 
 	settings = new ConfigFile(path);
-	settings->addDefaultString("", "asdf");
+	settings->addDefaultBool(KATAKANA_OPTION, false);
 
 	LOG(LOG_INFO, "Returned %d", settings->setup());
 

@@ -11,67 +11,182 @@ but it works so oh well...
 
 QString topNumberRow[14] = {"ろ", "ぬ", "ふ", "あ", "う", "え", "お", "や", "ゆ", "よ", "わ", "を", "ほ", "へ"};
 QString topRow[13] = {"た", "て", "い", "す", "か", "ん", "な", "に", "ら", "せ", "゛", "゜", "む"};
-QString middleRow[13] = {"た", "て", "い", "す", "か", "ん", "な", "に", "ら", "せ", "゛", "゜", "む"};
-QString bottomRow[13] = {"た", "て", "い", "す", "か", "ん", "な", "に", "ら", "せ", "゛", "゜", "む"};
+QString middleRow[11] = {"ち", "と", "し", "は", "き", "く", "ま", "の", "り", "れ", "け"};
+QString bottomRow[10] = {"つ", "さ", "そ", "ひ", "こ", "み", "も", "ね", "る", "め"};
+
+void switchCharacterSet(bool katakana) {
+	if(katakana) {
+		//Top number row
+		topNumberRow[0] = "ロ";
+		topNumberRow[1] = "ヌ";
+		topNumberRow[2] = "フ";
+		topNumberRow[3] = "ア";
+		topNumberRow[4] = "ウ";
+		topNumberRow[5] = "エ";
+		topNumberRow[6] = "オ";
+		topNumberRow[7] = "ヤ";
+		topNumberRow[8] = "ユ";
+		topNumberRow[9] = "ヨ";
+		topNumberRow[10] = "ワ";
+		topNumberRow[11] = "ヲ";
+		topNumberRow[12] = "ホ";
+		topNumberRow[13] = "ヘ";
+
+		//Top row
+		topRow[0] = "タ";
+		topRow[1] = "テ";
+		topRow[2] = "イ";
+		topRow[3] = "ス";
+		topRow[4] = "カ";
+		topRow[5] = "ン";
+		topRow[6] = "ナ";
+		topRow[7] = "ニ";
+		topRow[8] = "ラ";
+		topRow[9] = "セ";
+		topRow[10] = "゛";
+		topRow[11] = "゜";
+		topRow[12] = "ム";
+
+		//Middle Row
+		middleRow[0] = "チ";
+		middleRow[1] = "ト";
+		middleRow[2] = "シ";
+		middleRow[3] = "ハ";
+		middleRow[4] = "キ";
+		middleRow[5] = "ク";
+		middleRow[6] = "マ";
+		middleRow[7] = "ノ";
+		middleRow[8] = "リ";
+		middleRow[9] = "レ";
+		middleRow[10] = "ケ";
+
+		//Bottom Row
+		bottomRow[0] = "ツ";
+		bottomRow[1] = "サ";
+		bottomRow[2] = "ソ";
+		bottomRow[3] = "ヒ";
+		bottomRow[4] = "コ";
+		bottomRow[5] = "ミ";
+		bottomRow[6] = "モ";
+		bottomRow[7] = "ネ";
+		bottomRow[8] = "ル";
+		bottomRow[9] = "メ";
+	} else {
+		//Top number row
+		topNumberRow[0] = "ろ";
+		topNumberRow[1] = "ぬ";
+		topNumberRow[2] = "ふ";
+		topNumberRow[3] = "あ";
+		topNumberRow[4] = "う";
+		topNumberRow[5] = "え";
+		topNumberRow[6] = "お";
+		topNumberRow[7] = "や";
+		topNumberRow[8] = "ゆ";
+		topNumberRow[9] = "よ";
+		topNumberRow[10] = "わ";
+		topNumberRow[11] = "を";
+		topNumberRow[12] = "ほ";
+		topNumberRow[13] = "へ";
+
+		//Top Row
+		topRow[0] = "た";
+		topRow[1] = "て";
+		topRow[2] = "い";
+		topRow[3] = "す";
+		topRow[4] = "か";
+		topRow[5] = "ん";
+		topRow[6] = "な";
+		topRow[7] = "に";
+		topRow[8] = "ら";
+		topRow[9] = "せ";
+		topRow[10] = "゛";
+		topRow[11] = "゜";
+		topRow[12] = "む";
+
+		//Middle Row
+		middleRow[0] = "ち";
+		middleRow[1] = "と";
+		middleRow[2] = "し";
+		middleRow[3] = "は";
+		middleRow[4] = "き";
+		middleRow[5] = "く";
+		middleRow[6] = "ま";
+		middleRow[7] = "の";
+		middleRow[8] = "り";
+		middleRow[9] = "れ";
+		middleRow[10] = "け";
+
+		//Bottom Row
+		bottomRow[0] = "つ";
+		bottomRow[1] = "さ";
+		bottomRow[2] = "そ";
+		bottomRow[3] = "ひ";
+		bottomRow[4] = "こ";
+		bottomRow[5] = "み";
+		bottomRow[6] = "も";
+		bottomRow[7] = "ね";
+		bottomRow[8] = "る";
+		bottomRow[9] = "め";
+	}
+}
 
 QString parseQtRawKey(int b) {
 	switch(b) {
 		//top number row
-		case 96: return "ろ"; break;
-		case 49: return "ぬ"; break;
-		case 50: return "ふ"; break;
-		case 51: return "あ"; break;
-		case 52: return "う"; break;
-		case 53: return "え"; break;
-		case 54: return "お"; break;
-		case 55: return "や"; break;
-		case 56: return "ゆ"; break;
-		case 57: return "よ"; break;
-		case 48: return "わ"; break;
-		case 41: return "を"; break;
-		case 45: return "ほ"; break;
-		case 61: return "へ"; break;
+		case 96: return topNumberRow[0]; break;
+		case 49: return topNumberRow[1]; break;
+		case 50: return topNumberRow[2]; break;
+		case 51: return topNumberRow[3]; break;
+		case 52: return topNumberRow[4]; break;
+		case 53: return topNumberRow[5]; break;
+		case 54: return topNumberRow[6]; break;
+		case 55: return topNumberRow[7]; break;
+		case 56: return topNumberRow[8]; break;
+		case 57: return topNumberRow[9]; break;
+		case 48: return topNumberRow[10]; break;
+		case 41: return topNumberRow[11]; break;
+		case 45: return topNumberRow[12]; break;
+		case 61: return topNumberRow[13]; break;
 
 			//top qwerty row
-
-		case 81: return "た"; break;
-		case 87: return "て"; break;
-		case 69: return "い"; break;
-		case 82: return "す"; break;
-		case 84: return "か"; break;
-		case 89: return "ん"; break;
-		case 85: return "な"; break;
-		case 73: return "に"; break;
-		case 79: return "ら"; break;
-		case 80: return "せ"; break;
-		case 91: return "゛"; break;
-		case 93: return "゜"; break;
-		case 92: return "む"; break;
+		case 81: return topRow[0]; break;
+		case 87: return topRow[1]; break;
+		case 69: return topRow[2]; break;
+		case 82: return topRow[3]; break;
+		case 84: return topRow[4]; break;
+		case 89: return topRow[5]; break;
+		case 85: return topRow[6]; break;
+		case 73: return topRow[7]; break;
+		case 79: return topRow[8]; break;
+		case 80: return topRow[9]; break;
+		case 91: return topRow[10]; break;
+		case 93: return topRow[11]; break;
+		case 92: return topRow[12]; break;
 
 			//home row
-		case 65: return "ち"; break;
-		case 83: return "と"; break;
-		case 68: return "し"; break;
-		case 70: return "は"; break;
-		case 71: return "き"; break;
-		case 72: return "く"; break;
-		case 74: return "ま"; break;
-		case 75: return "の"; break;
-		case 76: return "り"; break;
-		case 59: return "れ"; break;
-		case 39: return "け"; break;
+		case 65: return middleRow[0]; break;
+		case 83: return middleRow[1]; break;
+		case 68: return middleRow[2]; break;
+		case 70: return middleRow[3]; break;
+		case 71: return middleRow[4]; break;
+		case 72: return middleRow[5]; break;
+		case 74: return middleRow[6]; break;
+		case 75: return middleRow[7]; break;
+		case 76: return middleRow[8]; break;
+		case 59: return middleRow[9]; break;
+		case 39: return middleRow[10]; break;
 
 			//bottom row
-		case 90: return "つ"; break;
-		case 88: return "さ"; break;
-		case 67: return "そ"; break;
-		case 86: return "ひ"; break;
-		case 66: return "こ"; break;
-		case 78: return "み"; break;
-		case 77: return "も"; break;
-		case 44: return "ね"; break;
-		case 46: return "る"; break;
-		case 47: return "め"; break;
+		case 90: return bottomRow[0]; break;
+		case 88: return bottomRow[1]; break;
+		case 67: return bottomRow[2]; break;
+		case 86: return bottomRow[3]; break;
+		case 66: return bottomRow[4]; break;
+		case 78: return bottomRow[5]; break;
+		case 77: return bottomRow[6]; break;
+		case 44: return bottomRow[7]; break;
+		case 46: return bottomRow[8]; break;
+		case 47: return bottomRow[9]; break;
 		default: "none";
 	}
 }

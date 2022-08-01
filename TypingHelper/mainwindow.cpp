@@ -2,11 +2,18 @@
 #include "backend.h"
 #include "logger.h"
 #include <qevent.h>
+#include "ConfigFile.h"
 
 TypingHelper::TypingHelper(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::TypingHelperClass()) {
 	ui->setupUi(this);
+
+	bool buf = false;
+	settings->getBool(KATAKANA_OPTION, buf);
+	if(buf) {
+		switchCharacterSet(true);
+	}
 
 	connect(ui->main_quit_button, SIGNAL(clicked()), this, SLOT(main_menu_quit_button_clicked()));
 	ui->main_menu->setCurrentIndex(3);
