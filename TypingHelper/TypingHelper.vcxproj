@@ -101,7 +101,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\settingstest\global.h" />
     <ClInclude Include="ConfigFile.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="logger.h" />
