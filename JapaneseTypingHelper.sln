@@ -5,8 +5,6 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TypingHelper", "TypingHelper\TypingHelper.vcxproj", "{6A4BEADA-3F70-4509-84EE-5FCC73500FA0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "settingstest", "settingstest\settingstest.vcxproj", "{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,14 +21,6 @@ Global
 		{6A4BEADA-3F70-4509-84EE-5FCC73500FA0}.Release|x64.Build.0 = Release|x64
 		{6A4BEADA-3F70-4509-84EE-5FCC73500FA0}.Release|x86.ActiveCfg = Release|x64
 		{6A4BEADA-3F70-4509-84EE-5FCC73500FA0}.Release|x86.Build.0 = Release|x64
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Debug|x64.ActiveCfg = Debug|x64
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Debug|x64.Build.0 = Debug|x64
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Debug|x86.ActiveCfg = Debug|Win32
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Debug|x86.Build.0 = Debug|Win32
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Release|x64.ActiveCfg = Release|x64
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Release|x64.Build.0 = Release|x64
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Release|x86.ActiveCfg = Release|Win32
-		{BBEE0686-EC93-4BE9-99BE-E11AB5322E04}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
