@@ -10,7 +10,6 @@ TypingHelper::TypingHelper(QWidget* parent)
 
 	connect(ui->main_quit_button, SIGNAL(clicked()), this, SLOT(main_menu_quit_button_clicked()));
 	ui->main_menu->setCurrentIndex(3);
-
 }
 
 void TypingHelper::keyPressEvent(QKeyEvent* event) {

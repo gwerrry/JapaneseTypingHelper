@@ -1,9 +1,8 @@
 #pragma once
 #include <string>
-#include <typeinfo>
 #include <vector>
+#include <filesystem>
 #include "global.h"
-#include "fileparser.h"
 
 class ConfigFile {
 private:
@@ -40,6 +39,5 @@ public:
 	std::string getString(std::string key);
 
 private:
-	std::string m_filePath;
-	std::vector <BreakfastParser::config_element> m_data;
+	std::filesystem::path m_filePath;
 };

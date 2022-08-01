@@ -32,7 +32,6 @@ QString parseQtRawKey(int b) {
 		case 45: return "ほ"; break;
 		case 61: return "へ"; break;
 
-
 			//top qwerty row
 
 		case 81: return "た"; break;

@@ -22,7 +22,6 @@ void createConsole() {
 }
 
 int main(int argc, char* argv[]) {
-
 	//testing stuff
 	createConsole();
 	//end testing stuff

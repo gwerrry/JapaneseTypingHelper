@@ -11,7 +11,6 @@ void die_gracefully() {
 	exit(0);
 }
 void die(int status, bool print_err, bool show_dialog, cstr err) {
-
 	if(print_err) {
 		LOG(LOG_FATAL, err);
 	}
