@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6571DAED-F28A-4909-9882-B5E4619EA810}</ProjectGuid>
+    <ProjectGuid>{0185D1A7-8B2D-4729-802D-E77118AE7A9A}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
@@ -34,7 +34,7 @@
     <QtInstall>6.2.2_msvc2019_64</QtInstall>
     <QtModules>quick</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
-    <QtQMLDebugEnable>true</QtQMLDebugEnable>
+    <QtQMLDebugEnable>false</QtQMLDebugEnable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.2.2_msvc2019_64</QtInstall>
@@ -59,6 +59,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QtRcc>
+      <QmlCacheGenerate>false</QmlCacheGenerate>
+    </QtRcc>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -86,19 +91,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="backend.cpp" />
     <ClCompile Include="ConfigFile.cpp" />
     <ClCompile Include="converter.cpp" />
     <ClCompile Include="lang.cpp" />
     <ClCompile Include="logger.c" />
-    <ClCompile Include="loggerwrapper.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include="qtquickcontrols2.conf" />
     <QtRcc Include="qml.qrc" />
     <None Include="main.qml" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="backend.h" />
+    <QtMoc Include="Lang.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Backend.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="ConfigFile.h" />
+    <ClInclude Include="Converter.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="logger.h" />
   </ItemGroup>

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6571DAED-F28A-4909-9882-B5E4619EA810}</ProjectGuid>
+    <ProjectGuid>{5D056389-546B-4DF5-84F1-9D9C4ED3E35E}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
@@ -86,21 +86,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="backend.cpp" />
-    <ClCompile Include="ConfigFile.cpp" />
-    <ClCompile Include="converter.cpp" />
     <ClCompile Include="lang.cpp" />
-    <ClCompile Include="logger.c" />
-    <ClCompile Include="loggerwrapper.cpp" />
     <ClCompile Include="main.cpp" />
     <QtRcc Include="qml.qrc" />
     <None Include="main.qml" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="backend.h" />
-    <ClInclude Include="ConfigFile.h" />
-    <ClInclude Include="global.h" />
-    <ClInclude Include="logger.h" />
+    <ClInclude Include="Lang.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
