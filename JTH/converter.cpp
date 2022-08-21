@@ -1,20 +1,20 @@
 ﻿#include "global.h"
-#include "backend.h"
+#include "converter.h"
+#include <qstring.h>
+#include <vector>
 
+using namespace std;
 /*
 Fuck this file.
 I really fucking hate this stupid peice of shit,
 but it works so oh well...
 */
+QString topNumberRow[14] = { "ろ", "ぬ", "ふ", "あ", "う", "え", "お", "や", "ゆ", "よ", "わ", "を", "ほ", "へ" };
+QString topRow[13] = { "た", "て", "い", "す", "か", "ん", "な", "に", "ら", "せ", "゛", "゜", "む" };
+QString middleRow[11] = { "ち", "と", "し", "は", "き", "く", "ま", "の", "り", "れ", "け" };
+QString bottomRow[10] = { "つ", "さ", "そ", "ひ", "こ", "み", "も", "ね", "る", "め" };
 
-/* Convert QT's amazing peice of shit to a wchar */
-
-QString topNumberRow[14] = {"ろ", "ぬ", "ふ", "あ", "う", "え", "お", "や", "ゆ", "よ", "わ", "を", "ほ", "へ"};
-QString topRow[13] = {"た", "て", "い", "す", "か", "ん", "な", "に", "ら", "せ", "゛", "゜", "む"};
-QString middleRow[11] = {"ち", "と", "し", "は", "き", "く", "ま", "の", "り", "れ", "け"};
-QString bottomRow[10] = {"つ", "さ", "そ", "ひ", "こ", "み", "も", "ね", "る", "め"};
-
-void switchCharacterSet(bool katakana) {
+void Converter::switchCharacterSet(bool katakana) {
 	if(katakana) {
 		//Top number row
 		topNumberRow[0] = "ロ";
@@ -130,7 +130,7 @@ void switchCharacterSet(bool katakana) {
 	}
 }
 
-QString parseQtRawKey(int b) {
+QString Converter::parseQtRawKey(int b) {
 	switch(b) {
 		//top number row
 		case 96: return topNumberRow[0]; break;
@@ -189,9 +189,10 @@ QString parseQtRawKey(int b) {
 		case 47: return bottomRow[9]; break;
 		default: "none";
 	}
+	return "none";
 }
 
-bool isValidKey(int key, KeyboardRows rows) {
+bool Converter::isValidKey(int key, KeyboardRows rows) {
 	if(rows.numberRow) {
 		switch(key) {
 			//top number row
@@ -266,4 +267,31 @@ bool isValidKey(int key, KeyboardRows rows) {
 		}
 	}
 	return false;
+}
+
+vector<QString>* Converter::getListOfKeys(KeyboardRows rows) {
+	vector<QString>* vec = new vector<QString>();
+
+	if(rows.numberRow) {
+		for(int i = 0; i < 14; i++) {
+			vec->push_back(topNumberRow[i]);
+		}
+	}
+	if(rows.topRow) {
+		for(int i = 0; i < 12; i++) {
+			vec->push_back(topRow[i]);
+		}
+	}
+	if(rows.middleRow) {
+		for(int i = 0; i < 10; i++) {
+			vec->push_back(middleRow[i]);
+		}
+	}
+	if(rows.bottomRow) {
+		for(int i = 0; i < 10; i++) {
+			vec->push_back(bottomRow[i]);
+		}
+	}
+
+	return vec;
 }

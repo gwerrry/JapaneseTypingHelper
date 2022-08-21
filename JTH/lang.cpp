@@ -68,7 +68,7 @@ void Language::setContext(QQmlContext* c) {
 	app = c;
 }
 
-Language::getCurrentLang() {
+int Language::getCurrentLang() {
 	return current_lang;
 }
 

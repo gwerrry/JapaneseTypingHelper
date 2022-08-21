@@ -2,7 +2,16 @@
 #include <string>
 #include <vector>
 #include <filesystem>
-#include "global.h"
+
+#ifdef _WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#elif __linux__
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
+std::string get_current_dir();
 
 class ConfigFile {
 public:
@@ -17,9 +26,9 @@ private:
 	typedef struct config_element {
 		std::string key;
 		value_type type;
-		bool* bool_value;
-		int* int_value;
-		std::string* string_value;
+		bool bool_value;
+		int int_value;
+		std::string string_value;
 	} ConfigPair;
 
 	std::filesystem::path m_filePath;
@@ -35,7 +44,7 @@ private:
 	bool addDefaultValue(std::string key, T value);
 
 	template<typename T>
-	bool getValue(std::string key, T& buffer);
+	T getValue(std::string key);
 
 	bool load_config();
 	bool validate_config();
@@ -57,9 +66,7 @@ public:
 	bool setBool(std::string key, bool value);
 	bool setString(std::string key, std::string value);
 
-	bool getInt(std::string key, int& buffer);
-	bool getBool(std::string key, bool& buffer);
-	bool getString(std::string key, std::string& buffer);
+	int getInt(std::string key);
+	bool getBool(std::string key);
+	std::string getString(std::string key);
 };
-
-extern ConfigFile* settings;

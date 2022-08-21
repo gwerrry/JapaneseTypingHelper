@@ -44,7 +44,7 @@ public:
 	
 	Language(QObject* parent = nullptr);
 	void setContext(QQmlContext* c);
-	void getCurrentLang();
+	int getCurrentLang();
 public slots:
 	void setLanguage(int language);
 };

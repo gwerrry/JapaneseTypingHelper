@@ -23,6 +23,7 @@ Window {
 
 	
     Rectangle {
+            id: app
             width: a_width
             height: a_height
             visible: true
@@ -115,6 +116,7 @@ Window {
                 visible: false
                 enabled: true
                 Rectangle {
+				    id: con
                     color: bgColor
                     width: parent.width
                     height: parent.height
@@ -175,7 +177,7 @@ Window {
                         stepSize: 1
                         to: 100
                         from: 0
-                        value: 1
+                        value: backend.getSfxVolume()
                     }
 
                     ComboBox {
@@ -185,7 +187,7 @@ Window {
                         width: 199
                         height: 52
                         font.pointSize: 14
-                        currentIndex: 0
+                        currentIndex: backend.getCurrentLanguage()
                         model: ListModel {
                             id: language_list
                             ListElement {
@@ -216,7 +218,7 @@ Window {
                     }
 
                     Label {
-                        id: label
+                        id: music_slider_label
                         x: 585
                         y: 164
                         width: 73
@@ -241,7 +243,7 @@ Window {
                         touchDragThreshold: 1
                         stepSize: 1
                         to: 100
-                        value: 1
+                        value: backend.getMusicVolume()
                     }
 
                     Label {
@@ -269,6 +271,9 @@ Window {
                             radius: buttonRadius
                         }
 						onClicked: {
+						    music_slider.value = backend.getMusicVolume()
+							sfx_slider.value = backend.getSfxVolume()
+							language_box.currentIndex = backend.getCurrentLanguage()
 						    settings_menu.visible = false
 							main_menu.visible = true
                         }
@@ -285,6 +290,11 @@ Window {
                             color: parent.down ? buttonClickColor : (parent.hovered ? buttonHoverColor : buttonBgColor)
                             radius: buttonRadius
                         }
+						onClicked: {
+                            backend.saveSettingsMenu(music_slider.value, sfx_slider.value, language_box.currentIndex)
+							settings_menu.visible = false
+							main_menu.visible = true
+						}
                     }
                 }
             }
