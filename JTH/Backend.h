@@ -7,7 +7,7 @@ class Backend : public QObject {
 private:
 	Language* lang;
 	ConfigFile* config;
-	bool katakanaOption;
+	bool katakanaOption, firstRowOption, secondRowOption, thirdRowOption, fourthRowOption;
 	int musicVolume, sfxVolume, currentLanguage;
 	bool setupConfig();
 public:
@@ -19,5 +19,7 @@ public slots:
 	int getCurrentLanguage();
 	int getMusicVolume();
 	void saveSettingsMenu(int musicVolume, int sfxVolume, int language);
+	void saveGameSettings(bool katakanaMode, bool firstRow, bool secondRow, bool thirdRow, bool forthRow);
+
 	void quit();
 };

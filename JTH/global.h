@@ -13,3 +13,15 @@
 
 #define CONFIG_SFX_VOLUME "sfx_volume"
 #define CONFIG_SFX_VOLUME_DEFAULT 100
+
+#define CONFIG_FIRST_ROW "first_keyboard_row"
+#define CONFIG_FIRST_ROW_DEFAULT true
+
+#define CONFIG_SECOND_ROW "second_keyboard_row"
+#define CONFIG_SECOND_ROW_DEFAULT true
+
+#define CONFIG_THRID_ROW "third_keyboard_row"
+#define CONFIG_THRID_ROW_DEFAULT true
+
+#define CONFIG_FOURTH_ROW "fourth_keyboard_row"
+#define CONFIG_FOURTH_ROW_DEFAULT true
