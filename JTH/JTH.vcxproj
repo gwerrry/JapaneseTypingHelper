@@ -91,6 +91,7 @@
     <ClCompile Include="lang.cpp" />
     <ClCompile Include="logger.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TypingGame.cpp" />
     <None Include="qtquickcontrols2.conf" />
     <QtRcc Include="qml.qrc" />
     <None Include="main.qml" />
@@ -103,7 +104,8 @@
     <ClInclude Include="Converter.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="logger.h" />
-    <QtMoc Include="Lang.h" />
+    <ClInclude Include="TypingGame.h" />
+    <ClInclude Include="Lang.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -62,7 +62,7 @@ void Language::setJapanese() {
 	app->setContextProperty(gameMenuSplashText, "入力してください...");
 }
 
-Language::Language(QObject* parent) : QObject(parent) {}
+Language::Language(){ app = nullptr; current_lang = ENGLISH_LANG; }
 
 void Language::setContext(QQmlContext* c) {
 	app = c;

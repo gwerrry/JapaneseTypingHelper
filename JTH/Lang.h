@@ -6,8 +6,8 @@
 #define ENGLISH_LANG 0
 #define JAPANESE_LANG 1
 
-class Language : public QObject {
-	Q_OBJECT
+class Language {
+
 private:
 	QQmlContext* app;
 	const char* backToMainMenuText = "backToMainMenuText";
@@ -42,9 +42,8 @@ private:
 
 public:
 	
-	Language(QObject* parent = nullptr);
+	Language();
 	void setContext(QQmlContext* c);
 	int getCurrentLang();
-public slots:
 	void setLanguage(int language);
 };

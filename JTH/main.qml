@@ -21,7 +21,14 @@ Window {
 	
     title: mainMenuSplashText
 
-	
+    function updateGameText() {
+        amount_correct_label.text = backend.getCorrectText()
+        amount_wrong_label.text = backend.getWrongText()
+        current_char_label.text = backend.getCurrentChar()
+    }
+    
+
+
     Rectangle {
             id: app
             width: a_width
@@ -30,18 +37,25 @@ Window {
 
             color: bgColor
 
+            Keys.onPressed: {
+                backend.processKey(event.key)
+            }
+
             Page {
                 id: main_menu
                 opacity: 1
                 visible: true
                 enabled: true
                 anchors.fill: parent
+
+
+
                 Rectangle {
                     color: bgColor
                     width: parent.width
                     height: parent.height
                     visible: true
-
+                    
                     Text {
                         id: main_label
                         x: 214
@@ -68,8 +82,12 @@ Window {
                             radius: buttonRadius
                         }
                         onClicked: {
+                            backend.resetStats()
+
                             main_menu.visible = false
                             game_menu.visible = true
+                            
+                            backend.startGame()
                         }
                     }
 
@@ -305,6 +323,7 @@ Window {
                 visible: false
                 anchors.fill: parent
                 enabled: true
+                
                 Rectangle {
                     x: 0
                     y: 0
@@ -326,6 +345,7 @@ Window {
                             border.width: 0
                             width: parent.width
                             height: parent.height
+                            
                             Switch {
                                 id: katakana_switch
                                 x: 0
@@ -335,6 +355,10 @@ Window {
                                 text: gameMenuKatakanaSwitcherText
                                 font.pointSize: 14
                                 antialiasing: true
+                                checked: backend.usingKatakana()
+                                onClicked: {
+                                    backend.saveGameSettings(katakana_switch.checked, number_row_switch.checked, top_row_switch.checked, middle_row_switch.checked, bottom_row_switch.checked)
+						        }
                             }
 
                             Label {
@@ -347,32 +371,6 @@ Window {
                                 horizontalAlignment: Text.AlignHCenter
                                 verticalAlignment: Text.AlignVCenter
                                 font.pointSize: 27
-                            }
-
-                            Switch {
-                                id: number_row_switch
-                                x: 0
-                                y: 192
-                                width: 200
-                                height: 48
-                                text: gameMenuNumberRowText
-                                antialiasing: true
-                                font.pointSize: 14
-                                font.bold: true
-                                font.family: "Courier"
-                            }
-
-                            Switch {
-                                id: top_row_switch
-                                x: 0
-                                y: 246
-                                width: 200
-                                height: 48
-                                text: gameMenuTopRowText
-                                antialiasing: true
-                                font.pointSize: 14
-                                font.bold: true
-                                font.family: "Courier"
                             }
 
                             Label {
@@ -388,6 +386,43 @@ Window {
                             }
 
                             Switch {
+                                id: number_row_switch
+                                x: 0
+                                y: 192
+                                width: 200
+                                height: 48
+                                text: gameMenuNumberRowText
+                                antialiasing: true
+                                font.pointSize: 14
+                                font.bold: true
+                                font.family: "Courier"
+
+                                checked: backend.usingFirstRow()
+                                onClicked: {
+                                    backend.saveGameSettings(katakana_switch.checked, number_row_switch.checked, top_row_switch.checked, middle_row_switch.checked, bottom_row_switch.checked)
+						        }
+                            }
+
+                            Switch {
+                                id: top_row_switch
+                                x: 0
+                                y: 246
+                                width: 200
+                                height: 48
+                                text: gameMenuTopRowText
+                                antialiasing: true
+                                font.pointSize: 14
+                                font.bold: true
+                                font.family: "Courier"
+                                checked: backend.usingSecondRow()
+                                onClicked: {
+                                    backend.saveGameSettings(katakana_switch.checked, number_row_switch.checked, top_row_switch.checked, middle_row_switch.checked, bottom_row_switch.checked)
+						        }
+                            }
+
+
+
+                            Switch {
                                 id: middle_row_switch
                                 x: 0
                                 y: 300
@@ -398,6 +433,10 @@ Window {
                                 font.pointSize: 14
                                 font.bold: true
                                 font.family: "Courier"
+                                checked: backend.usingThirdRow()
+                                onClicked: {
+                                    backend.saveGameSettings(katakana_switch.checked, number_row_switch.checked, top_row_switch.checked, middle_row_switch.checked, bottom_row_switch.checked)
+						        }
                             }
 
                             Switch {
@@ -412,6 +451,10 @@ Window {
                                 font.pointSize: 14
                                 font.bold: true
                                 font.family: "Courier"
+                                checked: backend.usingFourthRow()
+                                onClicked: {
+                                    backend.saveGameSettings(katakana_switch.checked, number_row_switch.checked, top_row_switch.checked, middle_row_switch.checked, bottom_row_switch.checked)
+						        }
                             }
 
                             Button {
@@ -428,6 +471,12 @@ Window {
                                     color: parent.down ? buttonClickColor : (parent.hovered ? buttonHoverColor : buttonBgColor)
                                     radius: buttonRadius
                                 }
+                                onClicked: {
+                                    backend.resetStats()
+                                    backend.stopGame()
+                                    game_menu.visible = false
+							        main_menu.visible = true
+						        }
                             }
                         }
                     }
@@ -442,7 +491,6 @@ Window {
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignTop
                     }
-
                     Label {
                         id: wrong_label
                         x: 626
@@ -464,7 +512,6 @@ Window {
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
-
                     Label {
                         id: amount_wrong_label
                         x: 626
@@ -490,6 +537,12 @@ Window {
                             color: parent.down ? buttonClickColor : (parent.hovered ? buttonPopHoverColor : buttonBgColor)
                             radius: buttonRadius
                         }
+
+                        onClicked: {
+                            backend.stopGame()
+                            backend.resetStats()
+                            backend.startGame()
+						}
                     }
 
                     Label {

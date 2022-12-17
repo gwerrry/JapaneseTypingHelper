@@ -11,7 +11,10 @@ using json = nlohmann::json;
 
 string get_current_dir() {
 	char buff[FILENAME_MAX]; //create string buffer to hold path
-	GetCurrentDir(buff, FILENAME_MAX);
+	if (!GetCurrentDir(buff, FILENAME_MAX)) {
+		LOG(LOG_FATAL, "There was an error getting the current directory of the executable.");
+		exit(-124);
+	}
 	string current_working_dir(buff);
 	return current_working_dir;
 }
