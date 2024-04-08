@@ -1,8 +1,12 @@
+/**
+ * i didnt do enough in here to claim this file. just used the QT template slightly modified.
+ */
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <qqmlcontext.h>
 #include <qqmlcomponent.h>
-#include "Backend.h"
+#include "backend.hpp"
 #include "logger.h"
 
 int main(int argc, char* argv[]) {

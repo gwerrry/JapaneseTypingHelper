@@ -1,4 +1,27 @@
-#include "ConfigUtil.h"
+/**
+ * @file config_util.cpp
+ * @author gwerry
+ * @brief Contains the ConfigFile class implementations.
+ * @version 1.0.0
+ * @date 2024/04/07
+ *
+ * Copyright 2024 gwerry
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "config_util.hpp"
 #include "logger.h"
 #include <iostream>
 #include <fstream>
@@ -9,7 +32,7 @@ using namespace std;
 namespace fs = filesystem;
 using json = nlohmann::json;
 
-string get_current_dir() {
+string getCurrentDir() {
 	char buff[FILENAME_MAX]; //create string buffer to hold path
 	if (!GetCurrentDir(buff, FILENAME_MAX)) {
 		LOG(LOG_FATAL, "There was an error getting the current directory of the executable.");
@@ -23,30 +46,24 @@ ConfigFile::ConfigFile(fs::path filePath) {
 	m_filePath = filePath;
 }
 
-bool ConfigFile::isSameType(value_type type, const type_info& typeinfo) {
+bool ConfigFile::isSameType(ValueType type, const type_info& typeinfo) {
 	switch (type) {
-	case value_type::BOOL: return typeinfo == typeid(bool); break;
-	case value_type::INT: return typeinfo == typeid(int); break;
-	case value_type::STRING: return typeinfo == typeid(string); break;
+		case ValueType::BOOL: return typeinfo == typeid(bool); break;
+		case ValueType::INT: return typeinfo == typeid(int); break;
+		case ValueType::STRING: return typeinfo == typeid(string); break;
 	}
 
 	return false;
 }
 
-ConfigFile::value_type ConfigFile::ti2vt(const type_info& typeinfo) {
-	if (typeinfo == typeid(int)) {
-		return value_type::INT;
-	}
-
-	if (typeinfo == typeid(bool)) {
-		return value_type::BOOL;
-	}
-
-	if (typeinfo == typeid(std::string)) {
-		return value_type::STRING;
-	}
-
-	return value_type::help;
+ConfigFile::ValueType ConfigFile::ti2vt(const type_info& typeinfo) {
+	if (typeinfo == typeid(int)) return ValueType::INT;
+	
+	if (typeinfo == typeid(bool)) return ValueType::BOOL;
+	
+	if (typeinfo == typeid(std::string)) return ValueType::STRING;
+	
+	return ValueType::NONE;
 }
 
 template<typename T>
@@ -55,17 +72,17 @@ bool ConfigFile::setValue(std::string key, T value) {
 		if (pair.key == key) {
 			if (ti2vt(typeid(T)) == pair.type) {
 				switch (pair.type) {
-					case value_type::BOOL:
-						{
-							pair.bool_value = value;
-							break;
-						}
-					case value_type::INT:
-						{
-							pair.int_value = value;
-							break;
-						}
+					case ValueType::BOOL: {
+						pair.bool_value = value;
+						break;
+					}
+					case ValueType::INT: {
+						pair.int_value = value;
+						break;
+					}
+					default: {}
 				}
+				
 				LOG(LOG_INFO, "Config value %s in %s was updated", key.c_str(), m_filePath.c_str());
 				saveConfig();
 				return true;
@@ -76,6 +93,7 @@ bool ConfigFile::setValue(std::string key, T value) {
 			}
 		}
 	}
+
 	LOG(LOG_ERROR, "Error trying to set a config value in %s at key %s because the key doens't exist...", m_filePath.c_str(), key.c_str());
 	return false;
 }
@@ -83,13 +101,15 @@ bool ConfigFile::setValue(std::string key, T value) {
 bool ConfigFile::setInt(std::string key, int value) {
 	return setValue<int>(key, value);
 }
+
 bool ConfigFile::setBool(std::string key, bool value) {
 	return setValue<bool>(key, value);
 }
+
 bool  ConfigFile::setString(std::string key, std::string value) {
 	for (ConfigPair& pair : m_data) {
 		if (pair.key == key) {
-			if (value_type::STRING == pair.type) {
+			if (ValueType::STRING == pair.type) {
 				pair.string_value = value;
 
 				LOG(LOG_INFO, "Config value %s in %s was updated", key.c_str(), m_filePath.c_str());
@@ -111,9 +131,9 @@ bool ConfigFile::addDefaultValue(string key, T value) {
 	ConfigPair newValue = { key, ti2vt(typeid(T)), 0, 0, ""};
 
 	switch (newValue.type) {
-	case value_type::BOOL: newValue.bool_value = value; break;
-	case value_type::INT: newValue.int_value = value; break;
-	default: return false;
+		case ValueType::BOOL: newValue.bool_value = value; break;
+		case ValueType::INT: newValue.int_value = value; break;
+		default: return false;
 	}
 
 	m_data.push_back(newValue);
@@ -130,7 +150,7 @@ bool ConfigFile::addDefaultBool(std::string key, bool value) {
 }
 
 bool ConfigFile::addDefaultString(std::string key, std::string value) {
-	m_data.push_back({ key, value_type::STRING, 0, 0,  value });
+	m_data.push_back({ key, ValueType::STRING, 0, 0,  value });
 	return true;
 }
 
@@ -139,8 +159,8 @@ T ConfigFile::getValue(string key) {
 	for (ConfigPair pair : m_data) {
 		if (pair.key == key && isSameType(pair.type, typeid(T))) {
 			switch (pair.type) {
-			case value_type::BOOL: return pair.bool_value; break;
-			case value_type::INT: return pair.int_value; break;
+				case ValueType::BOOL: return pair.bool_value; break;
+				case ValueType::INT: return pair.int_value; break;
 			}
 		}
 	}
@@ -158,7 +178,7 @@ bool ConfigFile::getBool(string key) {
 
 string ConfigFile::getString(string key) {
 	for (ConfigPair pair : m_data) {
-		if (pair.key == key && pair.type == value_type::STRING) {
+		if (pair.key == key && pair.type == ValueType::STRING) {
 			return pair.string_value;
 		}
 	}
@@ -171,21 +191,18 @@ bool ConfigFile::saveConfig() {
 
 	for (ConfigPair pair : m_data) {
 		switch (pair.type) {
-		case value_type::INT:
-		{
-			fileContents[pair.key] = pair.int_value;
-			break;
-		}
-		case value_type::BOOL:
-		{
-			fileContents[pair.key] = pair.bool_value;
-			break;
-		}
-		case value_type::STRING:
-		{
-			fileContents[pair.key] = pair.string_value;
-			break;
-		}
+			case ValueType::INT: {
+				fileContents[pair.key] = pair.int_value;
+				break;
+			}
+			case ValueType::BOOL: {
+				fileContents[pair.key] = pair.bool_value;
+				break;
+			}
+			case ValueType::STRING: {
+				fileContents[pair.key] = pair.string_value;
+				break;
+			}
 		}
 	}
 
@@ -197,23 +214,20 @@ bool ConfigFile::saveConfig() {
 	return true;
 }
 
-void ConfigFile::fill_defaults() {
+void ConfigFile::fillDefaults() {
 	json fileContents;
 
 	for (ConfigPair def : m_data) {
 		switch (def.type) {
-			case value_type::BOOL:
-			{
+			case ValueType::BOOL: {
 				fileContents[def.key] = def.bool_value;
 				break;
 			}
-			case value_type::INT:
-			{
+			case ValueType::INT: {
 				fileContents[def.key] = def.int_value;
 				break;
 			}
-			case value_type::STRING:
-			{
+			case ValueType::STRING: {
 				fileContents[def.key] = def.string_value;
 				break;
 			}
@@ -226,7 +240,7 @@ void ConfigFile::fill_defaults() {
 	file.close();
 }
 
-bool ConfigFile::validate_config() {
+bool ConfigFile::validateConfig() {
 	ifstream i(m_filePath);
 
 	json jsonFile;
@@ -246,24 +260,21 @@ bool ConfigFile::validate_config() {
 		}
 		else {
 			switch (def.type) {
-				case value_type::BOOL:
-				{
+				case ValueType::BOOL: {
 					if (!jsonFile[def.key].is_boolean()) {
 						LOG(LOG_ERROR, "Failed to validate config. Config value at %s for key %s is not a bool", m_filePath.c_str(), def.key.c_str());
 						isValid = false;
 					}
 					break;
 				}
-				case value_type::INT:
-				{
+				case ValueType::INT: {
 					if (!jsonFile[def.key].is_number_integer()) {
 						LOG(LOG_ERROR, "Failed to validate config. Config value at %s for key %s is not an int", m_filePath.c_str(), def.key.c_str());
 						isValid = false;
 					}
 					break;
 				}
-				case value_type::STRING:
-				{
+				case ValueType::STRING: {
 					if (!jsonFile[def.key].is_string()) {
 						LOG(LOG_ERROR, "Failed to validate config. Config value at %s for key %s is not a string", m_filePath.c_str(), def.key.c_str());
 						isValid = false;
@@ -277,7 +288,7 @@ bool ConfigFile::validate_config() {
 	return isValid;
 }
 
-bool ConfigFile::load_config() {
+bool ConfigFile::loadConfig() {
 	ifstream i(m_filePath);
 
 	json jsonFile;
@@ -291,18 +302,15 @@ bool ConfigFile::load_config() {
 
 	for (ConfigPair& def : m_data) {
 		switch (def.type) {
-			case value_type::BOOL:
-			{
+			case ValueType::BOOL: {
 				def.bool_value = jsonFile[def.key];
 				break;
 			}
-			case value_type::INT:
-			{
+			case ValueType::INT: {
 				def.int_value = jsonFile[def.key];
 				break;
 			}
-			case value_type::STRING:
-			{
+			case ValueType::STRING: {
 				def.string_value = jsonFile[def.key];
 				break;
 			}
@@ -318,9 +326,8 @@ bool ConfigFile::setup() {
 		dir = dir.substr(0, dir.find_last_of("/\\"));
 		
 		try {
-			if (fs::create_directory(dir)) {
-				LOG(LOG_INFO, "Config directory at %s created", dir.c_str());
-			}
+			if (fs::create_directory(dir)) LOG(LOG_INFO, "Config directory at %s created", dir.c_str());
+			
 			if (!fs::exists(dir)) {
 				LOG(LOG_FATAL, "Failed to create directory at %s", dir.c_str());
 				return false;
@@ -330,15 +337,13 @@ bool ConfigFile::setup() {
 			LOG(LOG_FATAL, "Encountered an error when trynig to create config directory at %s: %s", dir.c_str(), e.what());
 			return false;
 		}
-		fill_defaults();
+		fillDefaults();
 	}
-	else {
-		if (!validate_config()) {
-			LOG(LOG_FATAL, "Config file at %s was invalid. The config will be automatically reset.");
-			fs::remove(m_filePath);
-			fill_defaults();
-		}
+	else if (!validateConfig()) {
+		LOG(LOG_FATAL, "Config file at %s was invalid. The config will be automatically reset.");
+		fs::remove(m_filePath);
+		fillDefaults();
 	}
 
-	return load_config();
+	return loadConfig();
 }

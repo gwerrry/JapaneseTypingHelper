@@ -38,38 +38,38 @@
     <ClCompile Include="logger.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Backend.cpp">
+    <ClCompile Include="backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigUtil.cpp">
+    <ClCompile Include="config_util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TypingGame.cpp">
+    <ClCompile Include="typing_game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Backend.h">
+    <QtMoc Include="backend.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Converter.h">
+    <ClInclude Include="converter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
+    <ClInclude Include="global.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigUtil.h">
+    <ClInclude Include="config_util.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TypingGame.h">
+    <ClInclude Include="typing_game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lang.h">
+    <ClInclude Include="lang.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,14 +1,33 @@
-﻿#include "global.h"
-#include "converter.h"
+﻿/**
+ * @file converter.cpp
+ * @author gwerry
+ * @brief Contains the Converter namespace implementations.
+ * @version 1.0.0
+ * @date 2024/04/07
+ *
+ * Copyright 2024 gwerry
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "global.hpp"
+#include "converter.hpp"
 #include <qstring.h>
 #include <vector>
 
 using namespace std;
-/*
-Fuck this file.
-I really fucking hate this stupid peice of shit,
-but it works so oh well...
-*/
+
 QString topNumberRow[14] = { "ろ", "ぬ", "ふ", "あ", "う", "え", "お", "や", "ゆ", "よ", "わ", "を", "ほ", "へ" };
 QString topRow[13] = { "た", "て", "い", "す", "か", "ん", "な", "に", "ら", "せ", "゛", "゜", "む" };
 QString middleRow[11] = { "ち", "と", "し", "は", "き", "く", "ま", "の", "り", "れ", "け" };
@@ -148,7 +167,7 @@ QString Converter::parseQtRawKey(int b) {
 		case 45: return topNumberRow[12]; break;
 		case 61: return topNumberRow[13]; break;
 
-			//top qwerty row
+		//top qwerty row
 		case 81: return topRow[0]; break;
 		case 87: return topRow[1]; break;
 		case 69: return topRow[2]; break;
@@ -163,7 +182,7 @@ QString Converter::parseQtRawKey(int b) {
 		case 93: return topRow[11]; break;
 		case 92: return topRow[12]; break;
 
-			//home row
+		//home row
 		case 65: return middleRow[0]; break;
 		case 83: return middleRow[1]; break;
 		case 68: return middleRow[2]; break;
@@ -176,7 +195,7 @@ QString Converter::parseQtRawKey(int b) {
 		case 59: return middleRow[9]; break;
 		case 39: return middleRow[10]; break;
 
-			//bottom row
+		//bottom row
 		case 90: return bottomRow[0]; break;
 		case 88: return bottomRow[1]; break;
 		case 67: return bottomRow[2]; break;
@@ -187,28 +206,27 @@ QString Converter::parseQtRawKey(int b) {
 		case 44: return bottomRow[7]; break;
 		case 46: return bottomRow[8]; break;
 		case 47: return bottomRow[9]; break;
-		default: "none";
+		default: return "none";
 	}
-	return "none";
 }
 
 bool Converter::isValidKey(int key, KeyboardRows rows) {
 	if(rows.numberRow) {
 		switch(key) {
 			//top number row
-			case 96: return true; break;
-			case 49: return true; break;
-			case 50: return true; break;
-			case 51: return true; break;
-			case 52: return true; break;
-			case 53: return true; break;
-			case 54: return true; break;
-			case 55: return true; break;
-			case 56: return true; break;
-			case 57: return true; break;
-			case 48: return true; break;
-			case 41: return true; break;
-			case 45: return true; break;
+			case 96:
+			case 49:
+			case 50:
+			case 51:
+			case 52:
+			case 53:
+			case 54:
+			case 55:
+			case 56:
+			case 57:
+			case 48:
+			case 41:
+			case 45:
 			case 61: return true; break;
 			default: break;
 		}
@@ -217,18 +235,18 @@ bool Converter::isValidKey(int key, KeyboardRows rows) {
 		switch(key) {
 			//top qwerty row
 
-			case 81: return true; break;
-			case 87: return true; break;
-			case 69: return true; break;
-			case 82: return true; break;
-			case 84: return true; break;
-			case 89: return true; break;
-			case 85: return true; break;
-			case 73: return true; break;
-			case 79: return true; break;
-			case 80: return true; break;
-			case 91: return true; break;
-			case 93: return true; break;
+			case 81:
+			case 87:
+			case 69:
+			case 82:
+			case 84:
+			case 89:
+			case 85:
+			case 73:
+			case 79:
+			case 80:
+			case 91:
+			case 93:
 			case 92: return true; break;
 			default: break;
 		}
@@ -236,16 +254,16 @@ bool Converter::isValidKey(int key, KeyboardRows rows) {
 	if(rows.middleRow) {
 		switch(key) {
 			//home row
-			case 65: return true; break;
-			case 83: return true; break;
-			case 68: return true; break;
-			case 70: return true; break;
-			case 71: return true; break;
-			case 72: return true; break;
-			case 74: return true; break;
-			case 75: return true; break;
-			case 76: return true; break;
-			case 59: return true; break;
+			case 65:
+			case 83:
+			case 68:
+			case 70:
+			case 71:
+			case 72:
+			case 74:
+			case 75:
+			case 76:
+			case 59:
 			case 39: return true; break;
 			default: break;
 		}
@@ -253,15 +271,15 @@ bool Converter::isValidKey(int key, KeyboardRows rows) {
 	if(rows.bottomRow) {
 		switch(key) {
 			//bottom row
-			case 90: return true; break;
-			case 88: return true; break;
-			case 67: return true; break;
-			case 86: return true; break;
-			case 66: return true; break;
-			case 78: return true; break;
-			case 77: return true; break;
-			case 44: return true; break;
-			case 46: return true; break;
+			case 90:
+			case 88:
+			case 67:
+			case 86:
+			case 66:
+			case 78:
+			case 77:
+			case 44:
+			case 46:
 			case 47: return true; break;
 			default: break;
 		}
@@ -271,27 +289,29 @@ bool Converter::isValidKey(int key, KeyboardRows rows) {
 
 vector<QString>* Converter::getListOfKeys(KeyboardRows rows) {
 	vector<QString>* vec = new vector<QString>();
+	vec->reserve(46); // max possible size
 
-	if(rows.numberRow) {
-		for(int i = 0; i < 14; i++) {
+	if (rows.numberRow) {
+		for (int i = 0; i < 14; i++) {
 			vec->push_back(topNumberRow[i]);
 		}
 	}
-	if(rows.topRow) {
-		for(int i = 0; i < 12; i++) {
+	if (rows.topRow) {
+		for (int i = 0; i < 12; i++) {
 			vec->push_back(topRow[i]);
 		}
 	}
-	if(rows.middleRow) {
-		for(int i = 0; i < 10; i++) {
+	if (rows.middleRow) {
+		for (int i = 0; i < 10; i++) {
 			vec->push_back(middleRow[i]);
 		}
 	}
-	if(rows.bottomRow) {
-		for(int i = 0; i < 10; i++) {
+	if (rows.bottomRow) {
+		for (int i = 0; i < 10; i++) {
 			vec->push_back(bottomRow[i]);
 		}
 	}
 
+	vec->shrink_to_fit();
 	return vec;
 }

@@ -1,29 +1,48 @@
-﻿#include "global.h"
-#include "TypingGame.h"
+﻿/**
+ * @file typing_game.cpp
+ * @author gwerry
+ * @brief Contains the TypingGame namespace implementations.
+ * @version 1.0.0
+ * @date 2024/04/07
+ *
+ * Copyright 2024 gwerry
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "global.hpp"
+#include "typing_game.hpp"
+#include "converter.hpp"
 #include <qmetaobject.h>
 #include <vector>
 #include <random>
-#include "Converter.h"
+#include <thread>
 
 #define UPDATE_UI QMetaObject::invokeMethod(obj, "updateGameText");
 std::atomic_bool isRunning;
-int correct;
-int wrong;
+int correct, wrong;
 size_t currentCharIndex;
 QString currentChar = "さ";
 Backend* backend;
 QObject* obj;
-
 std::vector<QString>* charList;
 
-Converter::keyboardrows gd2rd(RowData rd) {
-	return { rd.firstRowOption, rd.secondRowOption, rd.thirdRowOption, rd.fourthRowOption };
-}
 void randomizeChar() {
 	if (!charList) {
-		charList = Converter::getListOfKeys(gd2rd(backend->getRowData()));
+		charList = Converter::getListOfKeys(backend->getRowData().rows);
 	}
-	if (charList->size() <= 0) {
+	if (charList->empty()) {
 		currentCharIndex = 0;
 		currentChar = QString("あ");
 		return;
@@ -60,7 +79,7 @@ void TypingGame::processKey(int key) {
 
 void TypingGame::startGame() {
 	if (charList) delete charList;
-	charList = Converter::getListOfKeys(gd2rd(backend->getRowData()));
+	charList = Converter::getListOfKeys(backend->getRowData().rows);
 	randomizeChar();
 	isRunning = true;
 	UPDATE_UI
@@ -69,8 +88,6 @@ void TypingGame::startGame() {
 void TypingGame::stopGame() {
 	isRunning = false;
 }
-
-
 
 void TypingGame::resetStats() {
 	isRunning = false;
@@ -95,11 +112,11 @@ QString TypingGame::getCurrentChar() {
 	return currentChar;
 }
 
-
 void TypingGame::setBackend(Backend* backendd) {
 	backend = backendd;
 	isRunning = false;
 }
+
 void TypingGame::setObj(QObject* backendd) {
 	obj = backendd;
 }

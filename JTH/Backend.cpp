@@ -1,14 +1,37 @@
-#include "Backend.h"
-#include "global.h"
-#include "Converter.h"
-#include <qcoreapplication.h>
+/**
+ * @file backend.cpp
+ * @author gwerry
+ * @brief Contains the Backend class implementations.
+ * @version 1.0.0
+ * @date 2024/04/07
+ *
+ * Copyright 2024 gwerry
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "backend.hpp"
+#include "converter.hpp"
+#include "global.hpp"
 #include "logger.h"
-#include "TypingGame.h"
+#include "typing_game.hpp"
+#include <qcoreapplication.h>
 
 Backend::Backend(QObject* parent, QQmlContext* context) : QObject(parent) {
 	lang = new Language();
 	lang->setContext(context);
-	
+	gameConfig = { false, {false, false, false, false} };
 	if (!setupConfig()) {
 		LOG(LOG_FATAL, "Failed to set up Config!");
 		exit(-1);
@@ -17,18 +40,15 @@ Backend::Backend(QObject* parent, QQmlContext* context) : QObject(parent) {
 	musicVolume = config->getInt(CONFIG_MUSIC_VOLUME);
 	sfxVolume = config->getInt(CONFIG_SFX_VOLUME);
 	currentLanguage = config->getInt(CONFIG_LANGUAGE);
-	gameConfig.katakanaOption = config->getBool(CONFIG_KATAKANA_MODE);
-	gameConfig.firstRowOption = config->getBool(CONFIG_FIRST_ROW);
-	gameConfig.secondRowOption = config->getBool(CONFIG_SECOND_ROW);
-	gameConfig.thirdRowOption = config->getBool(CONFIG_THRID_ROW);
-	gameConfig.fourthRowOption = config->getBool(CONFIG_FOURTH_ROW);
+
+	this->gameConfig.katakanaOption = config->getBool(CONFIG_KATAKANA_MODE);
+	gameConfig.rows = { config->getBool(CONFIG_FIRST_ROW), config->getBool(CONFIG_SECOND_ROW), config->getBool(CONFIG_THRID_ROW), config->getBool(CONFIG_FOURTH_ROW) };
 	Converter::switchCharacterSet(gameConfig.katakanaOption);
 	lang->setLanguage(currentLanguage);
-
 }
 
 bool Backend::setupConfig() {
-	std::string config_path = get_current_dir();
+	std::string config_path = getCurrentDir();
 	config_path += "/";
 	config_path += DATA_DIRECTORY;
 	config_path += "/config.json";
@@ -50,7 +70,6 @@ void Backend::setKatakana(bool katakanaOption) {
 	config->setBool(CONFIG_KATAKANA_MODE, katakanaOption);
 	this->gameConfig.katakanaOption = katakanaOption;
 	Converter::switchCharacterSet(katakanaOption);
-
 }
 
 void Backend::saveSettingsMenu(int musicVolume, int sfxVolume, int language) {
@@ -75,9 +94,9 @@ void Backend::saveSettingsMenu(int musicVolume, int sfxVolume, int language) {
 	
 	
 	*/
-	//update music and other volume stuff here. DO not FORGET!
+	//update music and other volume stuff here if want to add that.
 }
-#include <iostream>
+
 void Backend::processKey(int key) {
 	TypingGame::processKey(key);
 }
@@ -94,28 +113,24 @@ void Backend::resetStats() {
 	TypingGame::resetStats();
 }
 
-
-void Backend::saveGameSettings(bool katakanaMode, bool firstRow, bool secondRow, bool thirdRow, bool forthRow) {
+void Backend::saveGameSettings(bool katakanaMode, bool numberRow, bool topRow, bool middleRow, bool bottomRow) {
 	TypingGame::stopGame();
 
 	setKatakana(katakanaMode);
-	config->setBool(CONFIG_FIRST_ROW, firstRow);
-	config->setBool(CONFIG_SECOND_ROW, secondRow);
-	config->setBool(CONFIG_THRID_ROW, thirdRow);
-	config->setBool(CONFIG_FOURTH_ROW, forthRow);
+	config->setBool(CONFIG_FIRST_ROW, numberRow);
+	config->setBool(CONFIG_SECOND_ROW, topRow);
+	config->setBool(CONFIG_THRID_ROW, middleRow);
+	config->setBool(CONFIG_FOURTH_ROW, bottomRow);
 
-	gameConfig.firstRowOption = firstRow;
-	gameConfig.secondRowOption = secondRow;
-	gameConfig.thirdRowOption = thirdRow;
-	gameConfig.fourthRowOption = forthRow;
+	gameConfig.rows = { numberRow , topRow, middleRow, bottomRow };
 	TypingGame::startGame();
 }
 
 bool Backend::usingKatakana() { return gameConfig.katakanaOption; }
-bool Backend::usingFirstRow() { return gameConfig.firstRowOption; }
-bool Backend::usingSecondRow() { return gameConfig.secondRowOption; }
-bool Backend::usingThirdRow() { return gameConfig.thirdRowOption; }
-bool Backend::usingFourthRow() { return gameConfig.fourthRowOption; }
+bool Backend::usingFirstRow() { return gameConfig.rows.numberRow; }
+bool Backend::usingSecondRow() { return gameConfig.rows.topRow; }
+bool Backend::usingThirdRow() { return gameConfig.rows.middleRow; }
+bool Backend::usingFourthRow() { return gameConfig.rows.bottomRow; }
 void Backend::setObj(QObject* object) {
 	TypingGame::setObj(object);
 	TypingGame::setBackend(this);

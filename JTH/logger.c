@@ -145,7 +145,10 @@ void log_format(const char* tag, const char* message, va_list args) {
 	log_text_reset();
 }
 
-// Public Functions
+//////////////////////
+// Public Functions //
+//////////////////////
+
 /**
  * @brief Set the logger to support UTF-8. This is required for the logger to print out UTF-8 characters.
  */

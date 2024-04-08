@@ -31,12 +31,12 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.4.0_msvc2019_64</QtInstall>
+    <QtInstall>6.5.1_msvc2019_64</QtInstall>
     <QtModules>quick</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.4.0_msvc2019_64</QtInstall>
+    <QtInstall>6.5.1_msvc2019_64</QtInstall>
     <QtModules>quick</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
@@ -58,6 +58,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -85,27 +97,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Backend.cpp" />
-    <ClCompile Include="ConfigUtil.cpp" />
+    <ClCompile Include="backend.cpp" />
+    <ClCompile Include="config_util.cpp" />
     <ClCompile Include="converter.cpp" />
     <ClCompile Include="lang.cpp" />
     <ClCompile Include="logger.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TypingGame.cpp" />
+    <ClCompile Include="typing_game.cpp" />
     <None Include="qtquickcontrols2.conf" />
     <QtRcc Include="qml.qrc" />
     <None Include="main.qml" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Backend.h" />
+    <QtMoc Include="backend.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConfigUtil.h" />
-    <ClInclude Include="Converter.h" />
-    <ClInclude Include="global.h" />
+    <ClInclude Include="config_util.hpp" />
+    <ClInclude Include="converter.hpp" />
+    <ClInclude Include="global.hpp" />
     <ClInclude Include="logger.h" />
-    <ClInclude Include="TypingGame.h" />
-    <ClInclude Include="Lang.h" />
+    <ClInclude Include="typing_game.hpp" />
+    <ClInclude Include="lang.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
