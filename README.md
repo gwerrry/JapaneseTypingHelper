@@ -9,7 +9,7 @@ Look no further,&nbsp;&nbsp;*JapaneseTypingHelper* is here to help.
 JapaneseTypingHelper is a desktop app that allows you to practice typing in Japanese with the direct kana input keyboard. This is much quicker than having to type in romaji, if mastered.  
 
 ## Why JapaneseTypingHelper?
-Japanese Typing Helper offers a clean and simple user interface.  
+Japanese Typing Helper offers a clean and simple user interface and will surely get you typing efficiently with NO MORE ROMAJIIIIIII.  
 
 ### Features
 - Support for the random characters to be in Katakana
